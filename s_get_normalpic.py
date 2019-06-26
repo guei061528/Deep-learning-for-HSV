@@ -7,17 +7,19 @@ import time
 from Signaturefunctions.find_4_corners_15 import *
 Btime = time.time()
 
+mypath = "/home/gliance597/Guei_Project/Python/Signature_Recognition/DataSet/sigComp2011-Chinese-DataSet"
+
 Users = 10
 Samples = 30
 for i in range(0, Users, 1):
     si = str(i)
     for j in range(0, Samples, 1):
         sj = str(j)
-        if os.path.exists("/home/gliance597/Guei_Project/Python/Signature_Recognition/DataSet/sigComp2011-Chinese-DataSet/Genuine/"+ si +"/gtnb_" + sj + ".png"):
+        if os.path.exists(mypath + "/Genuine/"+ si +"/gtnb_" + sj + ".png"):
             pass
         else:
             try:
-                img = cv2.imread("/home/gliance597/Guei_Project/Python/Signature_Recognition/DataSet/sigComp2011-Chinese-DataSet/Genuine/"+ si + "/" + sj + ".png",0)
+                img = cv2.imread(mypath + "/Genuine/"+ si + "/" + sj + ".png",0)
                 ret, gray = cv2.threshold(img,127,255,cv2.THRESH_BINARY)
                 print("gray shape is ", gray.shape)
                 corners = cv2.goodFeaturesToTrack(gray,5000,0.01,4)
@@ -38,7 +40,8 @@ for i in range(0, Users, 1):
                 pts2 = np.float32([[0, 0], [320, 0], [0, 128], [320, 128]])
                 M = cv2.getPerspectiveTransform(pts1, pts2)
                 dst = cv2.warpPerspective(img, M, (320, 128))
-                cv2.imwrite("/home/gliance597/Guei_Project/Python/Signature_Recognition/DataSet/sigComp2011-Chinese-DataSet/Genuine/"+ si + "/gtnb_" + sj + ".png", dst)
+                ret2, img_binary = cv2.threshold(dst, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+                cv2.imwrite(mypath + "/Genuine/"+ si + "/gtnb_" + sj + ".png", img_binary)
                 print("User " + si + " for " + sj +" Times Genuine Finish")
             except:
                 print("Can't read image")
@@ -48,11 +51,11 @@ for i in range(0, Users, 1):
     si = str(i)
     for j in range(0, Samples, 1):
         sj = str(j)
-        if os.path.exists("/home/gliance597/Guei_Project/Python/Signature_Recognition/DataSet/sigComp2011-Chinese-DataSet/Forge/"+ si +"/gtnb_" + sj + ".png"):
+        if os.path.exists(mypath + "/Forge/"+ si +"/gtnb_" + sj + ".png"):
             pass
         else:
             try:
-                img = cv2.imread("/home/gliance597/Guei_Project/Python/Signature_Recognition/DataSet/sigComp2011-Chinese-DataSet/Forge/"+ si + "/" + sj + ".png",0)
+                img = cv2.imread(mypath + "/Forge/"+ si + "/" + sj + ".png",0)
                 ret, gray = cv2.threshold(img,127,255,cv2.THRESH_BINARY)
                 print("gray shape is ", gray.shape)
                 corners = cv2.goodFeaturesToTrack(gray,5000,0.01,4)
@@ -73,7 +76,8 @@ for i in range(0, Users, 1):
                 pts2 = np.float32([[0, 0], [320, 0], [0, 128], [320, 128]])
                 M = cv2.getPerspectiveTransform(pts1, pts2)
                 dst = cv2.warpPerspective(img, M, (320, 128))
-                cv2.imwrite("/home/gliance597/Guei_Project/Python/Signature_Recognition/DataSet/sigComp2011-Chinese-DataSet/Forge/"+ si + "/gtnb_" + sj + ".png", dst)
+                ret2, img_binary = cv2.threshold(dst, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+                cv2.imwrite(mypath + "/Forge/"+ si + "/gtnb_" + sj + ".png", img_binary)
                 print("User " + si + " for " + sj +" Times Forge Finish")
             except:
                 print("Can't read image")
