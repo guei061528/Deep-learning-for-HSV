@@ -10,6 +10,7 @@ from Signaturefunctions.Siamese_ROC_function import *
 from Signaturefunctions.functions import *
 import copy
 
+#Normalize the distance(similarity)
 def Normalization(x):
     tmp_ = np.mean(x) - np.std(x)
     x_new = copy.deepcopy(x)
@@ -47,7 +48,7 @@ Test_Total_Forge = []
 
 Test_Total_Genuine_np = []
 Test_Total_Forge_np = []
-
+#Build test data for each person
 for User_ID in train_users:
     print("User ID = ", User_ID)
     userData = {
@@ -104,8 +105,8 @@ print("Test_Total_Genuine_np shape = ", Test_Total_Genuine_np.shape)
 print("Test_Total_Forge_np shape = ", Test_Total_Forge_np.shape)
 print(Test_Total_Genuine_np)
 print(Test_Total_Forge_np)
-path_test = '/home/gliance597/Guei_Project/Python/Signature_Recognition/ROC/model101_Siamese_chinese'
-np.save(path_test + "/Test_Total_Genuine_np.npy", Test_Total_Genuine_np)
-np.save(path_test + "/Test_Total_Genuine_label_np.npy", Test_Total_Genuine_label_np)
-np.save(path_test + "/Test_Total_Forge_np.npy", Test_Total_Forge_np)
-np.save(path_test + "/Test_Total_Forge_label_np.npy", Test_Total_Forge_label_np)
+Test_Path = '/home/gliance597/Guei_Project/Python/Signature_Recognition/ROC/model101_Siamese_chinese'
+np.save(Test_Path + "/Test_Total_Genuine_np.npy", Test_Total_Genuine_np)
+np.save(Test_Path + "/Test_Total_Genuine_label_np.npy", Test_Total_Genuine_label_np)
+np.save(Test_Path + "/Test_Total_Forge_np.npy", Test_Total_Forge_np)
+np.save(Test_Path + "/Test_Total_Forge_label_np.npy", Test_Total_Forge_label_np)

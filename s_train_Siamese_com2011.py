@@ -13,6 +13,7 @@ from Signaturefunctions.functions import *
 Train_path = '/home/gliance597/Guei_Project/Python/Signature_Recognition/DataSet/sigComp2011-Chinese-DataSet/Genuine'
 train_users = os.listdir(Train_path)
 Save_model_path = '/home/gliance597/Guei_Project/Python/Signature_Recognition/network_parameters/Siamese_chinese_parameter/'
+
 #Set train, CV, test samples
 train_G_samples = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16']
 train_F_samples = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15']
@@ -20,13 +21,16 @@ CV_G_samples = ['16', '17', '18', '19']
 CV_F_samples = ['20', '21', '22', '23', '24']
 test_G_samples = ['20', '21', '22', '23']
 test_F_samples = ['25', '26', '27', '28', '29']
-path = '/home/gliance597/Guei_Project/Python/Signature_Recognition/DataSet/sigComp2011-Chinese-DataSet'
+Data_Path = '/home/gliance597/Guei_Project/Python/Signature_Recognition/DataSet/sigComp2011-Chinese-DataSet'
+
+
+#Training personal models
 for users in train_users:
     print("User ID = ", users)
-    best_org = best_ICDAR2011_org(path, users, train_G_samples)
+    best_org = best_ICDAR2011_org(Data_Path, users, train_G_samples)
     print("best user G sample org is ", best_org)
     userData = {
-        'filepath': '/home/gliance597/Guei_Project/Python/Signature_Recognition/DataSet/sigComp2011-Chinese-DataSet',
+        'filepath': Data_Path,
         'UserID': users,
         'train_G_samples': train_G_samples,
         'train_F_samples': train_F_samples,
@@ -35,6 +39,7 @@ for users in train_users:
         'best_org': best_org
     }
     all_data = getSiameseTrainData(userData)
+    #Select REF to be fixed on the other side of the Siamese network
     img_org = image_ICDAR_reference(userData['filepath'], users, best_org)
     training_data, training_data_label = all_data['output_train'], all_data['output_train_label']
     CV_data, CV_data_label = all_data['output_CV'], all_data['output_CV_label']
