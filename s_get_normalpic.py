@@ -7,7 +7,7 @@ import time
 from Signaturefunctions.find_4_corners_15 import *
 Btime = time.time()
 
-Users = 10000
+Users = 10
 Samples = 30
 for i in range(0, Users, 1):
     si = str(i)
